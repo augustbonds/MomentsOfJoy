@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="reminders">
+        <item>Smile ❤</item>
+        <item>Take a moment… 🌱</item>
+        <item>Walk home today 🚶</item>
+        <item>Hug a loved one 🤗</item>
+        <item>Call a friend 📞</item>
+        <item>Greet a stranger 👋</item>
+        <item>Think about something that makes you happy 😊</item>
+        <item>Compliment someone 😇</item>
+        <item>Breathe ☁</item>
+        <item>It will be okay 🤞</item>
+    </string-array>
+</resources>

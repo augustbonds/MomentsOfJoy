@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="reminder_frequency_descriptions">
+        <item>Never</item>
+        <item>Occasionally</item>
+        <item>Quite often</item>
+        <item>Often</item>
+    </string-array>
+</resources>
