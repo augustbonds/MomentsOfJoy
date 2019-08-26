@@ -3,51 +3,48 @@ package com.augustbonds.momentsofjoy
 import android.app.*
 import android.content.Context
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
     companion object {
         const val CHANNEL_ID = "reminders"
-        const val FREQUENCY_PREF_KEY = "notificationFrequency"
+        const val FREQUENCY_PREF_KEY = "notification frequency"
+        const val UNIQUE_WORK_NAME = "friendly reminder"
     }
 
     var notificationFrequency = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Logger.debug("onCreate called")
         setContentView(R.layout.activity_main)
         createNotificationChannel()
-
         loadSharedPrefs()
-
         setupSeekBar()
     }
 
     override fun onResume() {
         super.onResume()
-        Logger.info("Statuses: ")
-        WorkManager.getInstance().getStatusesByTag("notification").value?.forEach { Logger.info("Status: $it") }
+        Logger.debug("onResume called")
     }
 
     override fun onPause() {
         super.onPause()
-        Logger.info("pause called")
+        Logger.debug("onPause called")
         saveSharedPrefs()
     }
 
     private fun scheduleWork() {
-        //Remove previous scheduling
-        cancelWork()
+        Logger.debug("scheduleWork called")
 
         if (notificationFrequency == 0){
             //If the user has requested to remove notifications, we are done.
+            cancelWork()
             return
         }
 
@@ -59,20 +56,18 @@ class MainActivity : AppCompatActivity() {
             else -> Long.MAX_VALUE
         }
 
-        val workRequestBuilder = PeriodicWorkRequestBuilder<NotificationWorker>(hoursBetween, TimeUnit.HOURS)
-                .addTag("notification")
-
-        WorkManager.getInstance().enqueue(workRequestBuilder.build())
-        val workQueueSize = WorkManager.getInstance().getStatusesByTag("notification").value?.size
-        if (workQueueSize != null){
-            Logger.info("queue size after enqueue: $workQueueSize")
-        } else {
-            Logger.info("Failed to add work to queue")
-        }
+        val createWorkRequest = createWorkRequest(hoursBetween)
+        WorkManager.getInstance(this)
+                .enqueueUniquePeriodicWork(UNIQUE_WORK_NAME, ExistingPeriodicWorkPolicy.REPLACE, createWorkRequest)
     }
 
     private fun cancelWork(){
-        WorkManager.getInstance().cancelAllWork()
+        Logger.debug("cancelWork called")
+        WorkManager.getInstance(this).cancelUniqueWork(UNIQUE_WORK_NAME)
+    }
+
+    private fun createWorkRequest(intervalHours: Long) : PeriodicWorkRequest {
+        return PeriodicWorkRequestBuilder<NotificationWorker>(intervalHours, TimeUnit.HOURS).build()
     }
 
     private fun setupSeekBar(){
@@ -102,6 +97,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createNotificationChannel() {
+        Logger.debug("createNotificationChannel called")
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -112,10 +108,13 @@ class MainActivity : AppCompatActivity() {
                 description = descriptionText
             }
             // Register the channel with the system
-            val notificationManager: NotificationManager =
-                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager = getNotificationManager()
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    private fun getNotificationManager() : NotificationManager {
+        return getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
     private fun loadSharedPrefs() {

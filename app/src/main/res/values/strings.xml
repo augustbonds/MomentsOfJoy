@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">MomentsOfJoy</string>
     <string name="front_page_description">The sole purpose of this app is to give you a reminder once in a while, to do the small things that makes life special.</string>
-    <string name="notification_frequency_seekbar_label">How often do you want to be reminded?</string>
+    <string name="notification_frequency_seek_bar_label">How often do you want to be reminded?</string>
     <string name="notification_title">Moment of Joy</string>
-    <string name="channel_id">reminders</string>
     <string name="channel_name">reminders</string>
     <string name="channel_description">A channel for delivering moments of joy</string>
-    <string name="dont_worry_text">Don\'t worry. I won\'t bother you too early or too late in the day.</string>
+    <string name="do_not_worry_text">Don\'t worry. I won\'t bother you too early or too late in the day.</string>
     <string name="default_notification_frequency">Never</string>
 </resources>
