@@ -9,7 +9,7 @@ class Logger {
         }
 
         fun debug(message: String) {
-            Log.d("MomentsOfJoy" ,message)
+            Log.d("MomentsOfJoy", message)
         }
     }
 }

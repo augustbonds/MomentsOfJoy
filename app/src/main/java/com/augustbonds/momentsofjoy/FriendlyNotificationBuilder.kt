@@ -32,7 +32,7 @@ class FriendlyNotificationBuilder {
         return mBuilder.build()
     }
 
-    private fun getRandomReminder(context: Context) : String {
+    private fun getRandomReminder(context: Context): String {
         val reminders = context.resources.getStringArray(R.array.reminders)
         val random = Random(System.currentTimeMillis())
         val index = random.nextInt(reminders.size)

@@ -10,7 +10,7 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters) :
 
     override fun doWork(): Result {
 
-        if (!(isDay() && isWeekday()) ){
+        if (!(isDay() && isWeekday())) {
             //Only allow notifications during the workday
             Logger.debug("doWork called in the night.")
             return Result.success()
@@ -25,7 +25,7 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters) :
         return Result.success()
     }
 
-    private fun isDay() : Boolean {
+    private fun isDay(): Boolean {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -34,7 +34,7 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters) :
         return hour in 9..18
     }
 
-    private fun isWeekday() : Boolean {
+    private fun isWeekday(): Boolean {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)

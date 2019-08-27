@@ -1,13 +1,18 @@
 package com.augustbonds.momentsofjoy
 
-import android.app.*
+import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.work.*
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequest
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
 
 class MainActivity : Activity() {
@@ -42,7 +47,7 @@ class MainActivity : Activity() {
     private fun scheduleWork() {
         Logger.debug("scheduleWork called")
 
-        if (notificationFrequency == 0){
+        if (notificationFrequency == 0) {
             //If the user has requested to remove notifications, we are done.
             cancelWork()
             return
@@ -61,16 +66,16 @@ class MainActivity : Activity() {
                 .enqueueUniquePeriodicWork(UNIQUE_WORK_NAME, ExistingPeriodicWorkPolicy.REPLACE, createWorkRequest)
     }
 
-    private fun cancelWork(){
+    private fun cancelWork() {
         Logger.debug("cancelWork called")
         WorkManager.getInstance(this).cancelUniqueWork(UNIQUE_WORK_NAME)
     }
 
-    private fun createWorkRequest(intervalHours: Long) : PeriodicWorkRequest {
+    private fun createWorkRequest(intervalHours: Long): PeriodicWorkRequest {
         return PeriodicWorkRequestBuilder<NotificationWorker>(intervalHours, TimeUnit.HOURS).build()
     }
 
-    private fun setupSeekBar(){
+    private fun setupSeekBar() {
         val notificationFrequencyDescriptions = resources.getTextArray(R.array.reminder_frequency_descriptions)
 
         val notificationFrequencyDescriptionTextView = findViewById<TextView>(R.id.notificationFrequencyDescription)
@@ -79,7 +84,7 @@ class MainActivity : Activity() {
         val seekBar = findViewById<SeekBar>(R.id.notificationFrequencySeekBar)
         seekBar.progress = notificationFrequency
 
-        seekBar.setOnSeekBarChangeListener( object : SeekBar.OnSeekBarChangeListener {
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 //do nothing
             }
@@ -113,7 +118,7 @@ class MainActivity : Activity() {
         }
     }
 
-    private fun getNotificationManager() : NotificationManager {
+    private fun getNotificationManager(): NotificationManager {
         return getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 

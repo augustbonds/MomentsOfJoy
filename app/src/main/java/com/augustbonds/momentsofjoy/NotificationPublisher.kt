@@ -14,9 +14,9 @@ class NotificationPublisher : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         Logger.info("inside onReceive")
-        val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE ) as NotificationManager
+        val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notification = intent?.getParcelableExtra<Notification>(NOTIFICATION)
-        if (intent != null){
+        if (intent != null) {
             val notificationId = intent.getIntExtra(NOTIFICATION_ID, 0)
             notificationManager.notify(notificationId, notification)
         }
