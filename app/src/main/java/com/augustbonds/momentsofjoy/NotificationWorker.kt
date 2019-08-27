@@ -13,9 +13,10 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters) :
         calendar.timeInMillis = System.currentTimeMillis()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
 
+        Logger.debug("doWork: hour = $hour")
         //Only allow notifications between 9 and 18
-        if ( 9 < hour || hour >= 18){
-            Logger.debug("doWork called in the night.")
+        if ( hour < 9 || 18 <= hour){
+            Logger.debug("doWork called in the night. ${hour}h")
             return Result.success()
         }
 
