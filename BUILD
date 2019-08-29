@@ -1,4 +1,4 @@
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_android_library")
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_android_library", "kt_jvm_test")
 load("@rules_jvm_external//:defs.bzl", "artifact")
 
 PACKAGE = "com.augustbonds.momentsofjoy"
@@ -12,6 +12,14 @@ android_binary(
         ":momentsofjoy",
     ],
 )
+
+kt_jvm_test(
+    name = "momentsofjoy-test",
+    srcs = glob(["android/app/src/test/**/*.kt"]),
+    deps = [":momentsofjoy", artifact("junit:junit:4.12")],
+    test_class = "com.augustbonds.momentsofjoy.ExampleUnitTest",
+)
+
 
 kt_android_library(
     name = "momentsofjoy",
