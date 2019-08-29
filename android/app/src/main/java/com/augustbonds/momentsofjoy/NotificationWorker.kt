@@ -29,8 +29,6 @@ class NotificationWorker(context: Context, workerParameters: WorkerParameters) :
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-
         return hour in 9..18
     }
 
