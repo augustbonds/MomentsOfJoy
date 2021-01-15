@@ -15,6 +15,7 @@ android_binary(
 
 kt_jvm_test(
     name = "momentsofjoy-test",
+    size = "small",
     srcs = glob(["android/app/src/test/**/*.kt"]),
     deps = [":momentsofjoy", artifact("junit:junit:4.12")],
     test_class = "com.augustbonds.momentsofjoy.ExampleUnitTest",
