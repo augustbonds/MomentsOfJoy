@@ -1,7 +1,7 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/Android,AndroidStudio,Kotlin,Intellij,Java
-# Edit at https://www.toptal.com/developers/gitignore?templates=Android,AndroidStudio,Kotlin,Intellij,Java
-
+# Created by https://www.toptal.com/developers/gitignore/api/Android,AndroidStudio,Kotlin,Intellij,Java,gradle
+# Edit at https://www.toptal.com/developers/gitignore?templates=Android,AndroidStudio,Kotlin,Intellij,Java,gradle
+.DS_Store
 ### Android ###
 # Gradle files
 .gradle/
@@ -190,6 +190,29 @@ replay_pid*
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 
+### Gradle ###
+.gradle
+**/build/
+!src/**/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Avoid ignore Gradle wrappper properties
+!gradle-wrapper.properties
+
+# Cache of project
+.gradletasknamecache
+
+# Eclipse Gradle plugin generated files
+# Eclipse Core
+.project
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
 ### AndroidStudio ###
 # Covers files to be ignored for android development using Android Studio.
 
@@ -207,7 +230,6 @@ bin/
 gen/
 
 # Gradle files
-.gradle
 
 # Signing files
 .signing/
@@ -273,8 +295,6 @@ obj/
 .idea/navEditor.xml
 
 # Legacy Eclipse project files
-.classpath
-.project
 .cproject
 .settings/
 
@@ -299,4 +319,4 @@ obj/
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.toptal.com/developers/gitignore/api/Android,AndroidStudio,Kotlin,Intellij,Java
+# End of https://www.toptal.com/developers/gitignore/api/Android,AndroidStudio,Kotlin,Intellij,Java,gradle

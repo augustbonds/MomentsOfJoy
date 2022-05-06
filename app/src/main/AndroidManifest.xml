@@ -17,8 +17,4 @@
         </activity>
         <receiver android:name=".NotificationPublisher"/>
     </application>
-
-    <uses-sdk
-      android:minSdkVersion="15"
-      android:targetSdkVersion="28"/>
 </manifest>
